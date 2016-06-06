@@ -10,6 +10,8 @@ class Hero :
         self.mana = mana
         self.max_mana = mana
         self.mana_regeneration_rate = mana_regeneration_rate
+        self.posx = 0
+        self.posy = 0
 
     def known_as (self):
         return "{} the {}".format(self.name, self.title)
@@ -135,5 +137,34 @@ class Dungeon:
     def __init__(self, map_file):
         with open(map_file) as f:
             content = f.read()
-            lines = content.split('\n')
-            print lines
+            self.lines = content.split('\n')
+
+    def print_map(self):
+
+        for line in self.lines:
+            print (line)
+        print (self.lines)
+
+
+def spawn(hero,map):
+    x = 0
+    y = 0
+    for line in map.lines:
+        if 'S' in line:
+            y = line.index("S")
+            map.lines[x] = map.lines[x].replace('S','H')
+            break
+        x += 1
+    hero.posx = x
+    hero.posy = y
+    print (x,' ',y)
+
+if __name__ == '__main__':
+
+    hero = Hero("bashmaistora", "na_more", 100,100,2)
+    map = Dungeon("Level1.txt")
+    map.print_map()
+
+
+    spawn(hero, map)
+    map.print_map()
