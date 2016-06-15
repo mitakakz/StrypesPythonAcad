@@ -69,6 +69,8 @@ class Enemy :
         self.health = health
         self.mana = mana
         self.damage = damage
+        self.weapon = None
+        self.cast = None
 
     def is_alive(self):
         return self.health > 0
@@ -108,13 +110,17 @@ class Enemy :
         self.take_mana(self.mana_regeneration_rate)
 
     def equip(self, wepon):
-        pass
+        self.weapon = wepon
+
 
     def learn(self, spell):
-        pass
+        self.cast = spell
 
     def attack(self, by):
-        pass
+        if by == "weapon":
+            self.damage = self.weapon.damage
+        elif by == "magic":
+            self.damage = self.cast.damage
 
 
 class Wepon :
@@ -145,19 +151,28 @@ class Dungeon:
             print (line)
         print (self.lines)
 
+    def move_hero(self, direction):
+        if direction == "up":
+            pass
+        elif direction == "down":
+            pass
+        elif direction == "left":
+            pass
+        elif direction == "rigth":
+            pass
 
-def spawn(hero,map):
-    x = 0
-    y = 0
-    for line in map.lines:
-        if 'S' in line:
-            y = line.index("S")
-            map.lines[x] = map.lines[x].replace('S','H')
-            break
-        x += 1
-    hero.posx = x
-    hero.posy = y
-    print (x,' ',y)
+    def spawn(hero,map):
+        x = 0
+        y = 0
+        for line in map.lines:
+            if 'S' in line:
+                y = line.index("S")
+                map.lines[x] = map.lines[x].replace('S','H')
+                hero.posx = x
+                hero.posy = y
+                return True
+            x += 1
+        return False
 
 if __name__ == '__main__':
 
@@ -166,5 +181,5 @@ if __name__ == '__main__':
     map.print_map()
 
 
-    spawn(hero, map)
+    map.spawn(hero, map)
     map.print_map()
