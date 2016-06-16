@@ -39,3 +39,39 @@ class Vector:
 
     def __len__(self):
         return self.__current_capacity
+
+
+class Node:
+    """From a linked list"""
+
+    def __init__(self, value, next_node=None):
+        self.value = value
+
+        if next_node is not None and \
+            not isinstance(next_node,Node):
+            raise TypeError("next node should be an instance of Node")
+
+        self.next_node = next_node
+
+    def has_next(self):
+        return self.next_node is not None
+
+
+class DoubleLinkedList(Node):
+
+    """All defs should have 0(1) complexity"""
+    def __init__(self):
+        pass
+
+    def add_first(self, x):
+        pass
+
+    def add_last(self, x):
+        pass
+
+    def remove_first(self,x):
+        pass
+
+    def remove_last(self,x):
+        pass
+
