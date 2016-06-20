@@ -47,9 +47,7 @@ class Node:
     def __init__(self, value, next_node=None):
         self.value = value
 
-        if next_node is not None and \
-            not isinstance(next_node,Node):
-            raise TypeError("next node should be an instance of Node")
+
 
         self.next_node = next_node
 
@@ -60,18 +58,49 @@ class Node:
 class DoubleLinkedList(Node):
 
     """All defs should have 0(1) complexity"""
-    def __init__(self):
-        pass
+    def __init__(self,value, next_node=None, prev_node=None):
+        self.prev = prev_node
 
-    def add_first(self, x):
-        pass
+        if (next_node is not None or prev_node is not None) and \
+                (not isinstance(next_node, Node) or not isinstance(next_node, DoubleLinkedList)):
+            raise TypeError("next node should be an instance of Node or DoubleLinkedList")
 
-    def add_last(self, x):
-        pass
+        super().__init__(value,next_node)
 
-    def remove_first(self,x):
-        pass
+    def __str__(self):
+        return str(self.value)
+
+    def add_first(self, head):
+        self.next_node = head
+        head.prev = self
+
+    def add_last(self, tail):
+        self.prev = tail
+        tail.next_node = self
+
+    def remove_first(self):
+        self.next_node.prev = None
 
     def remove_last(self,x):
-        pass
+        self.prev.next_node = None
 
+    def print_list(self):
+        obj = self
+        while True :
+
+            print(obj)
+            if obj.next_node == None:
+                break
+            obj = obj.next_node
+
+
+a = DoubleLinkedList(2)
+c = DoubleLinkedList(4)
+b = DoubleLinkedList(3,c,a)
+a.add_first(b)
+h = DoubleLinkedList(1)
+h.add_first(a)
+c.add_last(b)
+
+
+h.print_list()

@@ -149,11 +149,19 @@ class Dungeon:
 
         for line in self.lines:
             print (line)
-        print (self.lines)
+        #print (self.lines)
 
     def move_hero(self, direction):
+        y = 0
+        for line in self.lines:
+            if 'H' in line:
+                x = line.index('H')
+                break
+            y += 1
+        print (x,y)
         if direction == "up":
-            pass
+            if y > 0:
+                pass
         elif direction == "down":
             pass
         elif direction == "left":
@@ -161,7 +169,7 @@ class Dungeon:
         elif direction == "rigth":
             pass
 
-    def spawn(hero,map):
+    def spawn(self, hero,map):
         x = 0
         y = 0
         for line in map.lines:
@@ -180,6 +188,7 @@ if __name__ == '__main__':
     map = Dungeon("Level1.txt")
     map.print_map()
 
-
+    print("___________________________")
     map.spawn(hero, map)
     map.print_map()
+    map.move_hero("up")
