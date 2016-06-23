@@ -50,7 +50,7 @@ class Tree:
     def search(self, x, vertex):
         if x == vertex.value:
             self.__found_by_value =  vertex
-        print(vertex.value)
+        #print(vertex.value)
         for child in vertex.children:
             self.search(x, child)
 
@@ -85,12 +85,22 @@ class Tree:
         result = []
         elems_per_level = ()
         level = 1
+        lev_len = len(pipe)
 
         while True:
-            for elem in pipe:
-                elems_per_level += elems_per_level+(elem.value,)
-            result += [(level,elems_per_level)]
-
+            elem = pipe.popleft()
+            elems_per_level += (elem.value,)
+            for p in elem.children:
+                pipe.append(p)
+            lev_len -= 1
+            if lev_len == 0:
+                result += [(level, elems_per_level)]
+                level += 1
+                elems_per_level = ()
+                lev_len = len(pipe)
+                if lev_len == 0:
+                    break
+        return result
 
 
 
@@ -99,6 +109,9 @@ class Tree:
 tree = Tree(root=5)
 tree.add(value=4,parent=5)
 tree.add(value=3,parent=5)
+tree.add(value=6,parent=3)
+tree.add(value=7,parent=3)
 print("__________________________________")
 print(tree.find(4))
-tree.bfs_from_root()
+print(tree.bfs_from_root())
+#tree.bfs_from_root()
